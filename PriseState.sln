@@ -1,14 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriseState.Core", "PriseState.Core\PriseState.Core.csproj", "{067B1D2B-E22F-4847-AC56-041EB23720C5}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriseState.Core", "PriseState.Core\PriseState.Core.csproj", "{067B1D2B-E22F-4847-AC56-041EB23720C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceState.Data", "PriceState.Data\PriceState.Data.csproj", "{B2F1C2C5-A525-4042-A667-5B1595801B00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceState.Data", "PriceState.Data\PriceState.Data.csproj", "{B2F1C2C5-A525-4042-A667-5B1595801B00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceState.Interfaces", "PriceState.Interfaces\PriceState.Interfaces.csproj", "{215B200F-353B-4D40-9288-CCC2948D1403}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceState.Interfaces", "PriceState.Interfaces\PriceState.Interfaces.csproj", "{215B200F-353B-4D40-9288-CCC2948D1403}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceState.Services", "PriceState.Services\PriceState.Services.csproj", "{E1D39162-1523-4ED0-AAA1-27570DC4C7C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceState.Services", "PriceState.Services\PriceState.Services.csproj", "{E1D39162-1523-4ED0-AAA1-27570DC4C7C2}"
 EndProject
-
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{067B1D2B-E22F-4847-AC56-041EB23720C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2F1C2C5-A525-4042-A667-5B1595801B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2F1C2C5-A525-4042-A667-5B1595801B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F1C2C5-A525-4042-A667-5B1595801B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F1C2C5-A525-4042-A667-5B1595801B00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{215B200F-353B-4D40-9288-CCC2948D1403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{215B200F-353B-4D40-9288-CCC2948D1403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215B200F-353B-4D40-9288-CCC2948D1403}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,5 +33,8 @@ Global
 		{E1D39162-1523-4ED0-AAA1-27570DC4C7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1D39162-1523-4ED0-AAA1-27570DC4C7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1D39162-1523-4ED0-AAA1-27570DC4C7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

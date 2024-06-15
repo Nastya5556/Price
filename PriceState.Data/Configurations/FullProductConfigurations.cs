@@ -17,8 +17,5 @@ public class FullProductConfigurations
             .WithMany(x => x.FullProducts)
             .HasForeignKey(x => x.ProductId);
         
-        builder.HasOne(x => x.DopProduct)
-            .WithMany(x => x.FullProducts)
-            .HasForeignKey(x => x.DopProductId);
     }
 }

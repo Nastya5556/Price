@@ -18,18 +18,16 @@ public class FullProductService: IFullProductService
 	}
 	
 
-	public async Task<FullProduct?> CreateFullProductAsync( int unitId, long productId, long dopProductId)
+	public async Task<FullProduct?> CreateFullProductAsync( int unitId, long productId)
 	{
 		if (await _db.Units.AllAsync(x => x.Id != unitId))
 			throw new PriceStateException($"Unit {unitId} is not exists!", EnumErrorCode.EntityIsNotFound);
 		if (await _db.Products.AllAsync(x => x.Id != productId))
 			throw new PriceStateException($"Product {productId} is not exists!", EnumErrorCode.EntityIsNotFound);
-		if (await _db.DopProducts.AllAsync(x => x.Id != dopProductId))
-			throw new PriceStateException($"DopProduct {dopProductId} is not exists!", EnumErrorCode.EntityIsNotFound);
+		
 		var fullProduct = new FullProduct
 		{
 			UnitId = unitId,
-			DopProductId = dopProductId,
 			ProductId = productId
 		};
 
@@ -49,7 +47,6 @@ public class FullProductService: IFullProductService
 			new FullProductModel
 			{
 				ProductId  = x.ProductId,
-				DopProductId = x.DopProductId,
 				UnitId = x.UnitId
 			});
 
@@ -67,7 +64,6 @@ public class FullProductService: IFullProductService
 			new FullProductModel
 			{
 				ProductId  = x.ProductId,
-				DopProductId = x.DopProductId,
 				UnitId = x.UnitId
 			});
 
@@ -84,7 +80,6 @@ public class FullProductService: IFullProductService
 			new FullProductModel
 			{
 				ProductId  = x.ProductId,
-				DopProductId = x.DopProductId,
 				UnitId = x.UnitId
 			});
 

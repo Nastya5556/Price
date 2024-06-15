@@ -8,11 +8,11 @@ public class PriceOrganizationConfigurations
 {
     public PriceOrganizationConfigurations(EntityTypeBuilder<PriceOrganization> builder)
     {
-        builder.HasKey(x => new { x.Date , x.OrganizationId, x.ProductId});
+        builder.HasKey(x => new { x.Date , x.OrganizationId, x.FullProductId});
 
-    builder.HasOne(x => x.Product)
+    builder.HasOne(x => x.FullProduct)
             .WithMany(x => x.PriceOrganizations)
-            .HasForeignKey(x => x.ProductId);
+            .HasForeignKey(x => x.FullProductId);
     
     builder.HasOne(x => x.Organization)
         .WithMany(x => x.PriceOrganizations)

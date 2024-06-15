@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PriceState.Data.Models;
 using PriceState.Interfaces;
 using PriceState.Interfaces.Model;
 using PriceState.Interfaces.Model.Organization;
@@ -8,8 +9,8 @@ using PriceState.Interfaces.Model.Product;
 using PriseState.Core.Models;
 
 namespace PriseState.Core.Controller;
-
-public class ProductController: Microsoft.AspNetCore.Mvc.Controller
+[Route("Product")]
+public class ProductController: ControllerBase
 {
 	private readonly IProductService _productService;
 
@@ -29,10 +30,10 @@ public class ProductController: Microsoft.AspNetCore.Mvc.Controller
 	[ProducesResponseType(200, Type = typeof(BaseResponse<long>))]
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
 	[Authorize]
-	public async Task<BaseResponse<long>> Add([FromBody] AddProductRequest request)
+	public async Task<BaseResponse<Product>> Add([FromBody] AddProductRequest request)
 	{
-		var result = await _productService.AddProductAsync(request.RegionId, request.Name);
-		return new BaseResponse<long>(result);
+		var result = await _productService.AddProductAsync(request.ParentId, request.Name);
+		return new BaseResponse<Product>(result);
 	}
 
 	/// <summary>
@@ -45,7 +46,7 @@ public class ProductController: Microsoft.AspNetCore.Mvc.Controller
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
 	public async Task<BaseResponse<GetProductsResponse>> GetAll([FromQuery] GetProductsRequest request)
 	{
-		var result = await _productService.GetProducts(request);
+		var result = await _productService.GetAllProductAsync(request);
 		return new BaseResponse<GetProductsResponse>(result);
 	}
 
@@ -57,10 +58,10 @@ public class ProductController: Microsoft.AspNetCore.Mvc.Controller
 	[Route($"{nameof(GetProduct)}")]
 	[ProducesResponseType(200, Type = typeof(BaseResponse<IReadOnlyCollection<ProductModel>>))]
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
-	public async Task<BaseResponse<GetOrganizationsResponse>> GetOrganization([FromQuery] GetProductRequest request)
+	public async Task<BaseResponse<GetProductsResponse>> GetProduct([FromQuery] GetProductRequest request)
 	{
-		var result = await _productService.GetProduct(request);
-		return new BaseResponse<GetOrganizationsResponse>(result);
+		var result = await _productService.GetProductAsync(request);
+		return new BaseResponse<GetProductsResponse>(result);
 	}
 
 	/// <summary>
@@ -74,7 +75,7 @@ public class ProductController: Microsoft.AspNetCore.Mvc.Controller
 	[Authorize]
 	public async Task<BaseResponse> Rename([FromQuery] long id, [FromQuery] string name)
 	{
-		await _productService.RenameProduct(id, name);
+		await _productService.RenameProductAsync(id, name);
 		return new BaseResponse();
 	}
 
@@ -89,7 +90,7 @@ public class ProductController: Microsoft.AspNetCore.Mvc.Controller
 	[Authorize]
 	public async Task<BaseResponse> Delete([FromQuery] long id)
 	{
-		await _productService.DeleteProduct(id);
+		await _productService.DeleteProductAsync(id);
 		return new BaseResponse();
 	}
 }

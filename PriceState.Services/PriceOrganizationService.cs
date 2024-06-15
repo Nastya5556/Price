@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using PriceState.Data;
 using PriceState.Data.Models;
+using PriceState.Data.Reports;
 using PriceState.Interfaces;
 using PriceState.Interfaces.Model;
 using PriceState.Interfaces.Model.Organization;
@@ -30,14 +31,14 @@ public class PriceOrganizationService : IPriceOrganizationService
             throw new PriceStateException($"Product {productId} is not exists!", EnumErrorCode.EntityIsNotFound);
 
         if (await _db.PriceOrganizations.AnyAsync(x =>
-                x.ProductId == productId && x.OrganizationId == organizationId && x.Date == date))
+                x.FullProductId == productId && x.OrganizationId == organizationId && x.Date == date))
             throw new PriceStateException($"There is such a price", EnumErrorCode.EntityIsAlreadyExists);
         var priceOrganization = new PriceOrganization
         {
             Date = date,
             OrganizationId = organizationId,
             Price = price,
-            ProductId = productId
+            FullProductId = productId
         };
 
         await _db.PriceOrganizations.AddAsync(priceOrganization);
@@ -70,7 +71,14 @@ public class PriceOrganizationService : IPriceOrganizationService
         return result;
     }*/
 
+   /* public async Task<List<AvgPrice>> GetProductsByCtegoryAsync()
+    {
+        DateTime date1 = new DateTime(2024, 6, 1);
+        DateTime date2 = new DateTime(2024, 6, 30);
+        string sqlQuery = $"SELECT * FROM avg_price ({date1},{date2})";
+        return await _db.AvgPrices.FromSqlRaw(sqlQuery).ToListAsync();
 
+    }*/
     public async Task<GetPriceOrganizationsResponse> GetPriceOrganizationAsync(GetPriceOrganizationRequest request)
     {
         var query = request.OrganizationId.HasValue
@@ -80,7 +88,7 @@ public class PriceOrganizationService : IPriceOrganizationService
         var result = await query.GetPageAsync<GetPriceOrganizationsResponse, PriceOrganization, PriceOrganizationModel>(request, x =>
             new PriceOrganizationModel
             {
-                ProductId = x.ProductId,
+                FullProductId = x.FullProductId,
                 OrganizationId  = x.OrganizationId,
                 Price = x.Price
             });
@@ -91,7 +99,7 @@ public class PriceOrganizationService : IPriceOrganizationService
     public async Task RenamePriceOrganizationAsync(long organizationId, decimal price, DateTime date, long productId)
     {
         var priceOrganization = await _db.PriceOrganizations.FirstOrDefaultAsync(x =>
-            x.ProductId == productId && x.OrganizationId == organizationId && x.Date == date);
+            x.FullProductId == productId && x.OrganizationId == organizationId && x.Date == date);
         if (priceOrganization is null)
             throw new PriceStateException($"PriceOrganization is not exists!", EnumErrorCode.EntityIsNotFound);
 
@@ -103,7 +111,7 @@ public class PriceOrganizationService : IPriceOrganizationService
     public async Task DeletePriceOrganizationAsync(long organizationId, DateTime date, long productId)
     {
         var priceOrganization = await _db.PriceOrganizations.FirstOrDefaultAsync(x =>
-            x.ProductId == productId && x.OrganizationId == organizationId && x.Date == date);
+            x.FullProductId == productId && x.OrganizationId == organizationId && x.Date == date);
         _db.PriceOrganizations.Remove(priceOrganization);
         await _db.SaveChangesAsync();
     }

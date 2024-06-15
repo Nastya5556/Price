@@ -5,6 +5,7 @@ public class AddOrganizationRequest
     /// <summary>
     ///     Название кафедры
     /// </summary>
+    public int Id {get; set;}
     public string OrganizationName { get; set; } = string.Empty;
 
     /// <summary>

@@ -17,13 +17,14 @@ public class OrganizationService: IOrganizationService
 		_db = db;
 	}
 
-	public async Task<long> AddOrganizationAsync(int regionId, string name)
+	public async Task<long> AddOrganizationAsync(int id, int regionId, string name)
 	{
 		if (await _db.Regions.AllAsync(x => x.Id != regionId))
 			throw new PriceStateException($"Region {regionId} is not exists!", EnumErrorCode.EntityIsNotFound);
 
 		var organization = new Organization
 		{
+			Id = id,
 			Name = name,
 			RegionId = regionId
 		};

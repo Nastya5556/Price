@@ -22,9 +22,6 @@ public class ProductTypeService: IProductTypeService
         if (string.IsNullOrWhiteSpace(name))
             throw new PriceStateException("Incorrect ProductType name!", EnumErrorCode.ArgumentIsIncorrect);
 
-        if (await _db.DopProducts.AnyAsync(x => x.Name == name))
-            throw new PriceStateException($"ProductType with name {name} is already exists!", EnumErrorCode.EntityIsAlreadyExists);
-
 
         var productType = new ProductType
         {

@@ -8,8 +8,9 @@ using PriceState.Interfaces.Pagination;
 using PriseState.Core.Models;
 
 namespace PriseState.Core.Controller;
+[Route("ProductType")]
 
-public class ProductTypeController: Microsoft.AspNetCore.Mvc.Controller
+public class ProductTypeController: ControllerBase
 {
 	private readonly IProductTypeService _productType;
 

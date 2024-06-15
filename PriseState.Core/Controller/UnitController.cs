@@ -8,8 +8,9 @@ using PriceState.Interfaces.Pagination;
 using PriseState.Core.Models;
 
 namespace PriseState.Core.Controller;
+[Route("Unit")]
 
-public class UnitController: Microsoft.AspNetCore.Mvc.Controller
+public class UnitController: ControllerBase
 {
 	private readonly IUnitService _unit;
 

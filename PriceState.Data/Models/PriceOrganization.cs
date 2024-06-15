@@ -8,9 +8,10 @@ public class PriceOrganization
     
     public DateTime Date { get; set; }
     
-    public Product Product { get; set; }
-
-    public long ProductId { get; set; }
+    public FullProduct FullProduct { get; set; }
+    
+    public long FullProductId { get; set; }
+    
     
     public Organization Organization { get; set; }
 

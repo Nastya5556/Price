@@ -1,0 +1,16 @@
+D:\Borodina\PriceState2\PriceState.Interfaces\bin\Debug\net8.0\PriceState.Interfaces.deps.json
+D:\Borodina\PriceState2\PriceState.Interfaces\bin\Debug\net8.0\PriceState.Interfaces.dll
+D:\Borodina\PriceState2\PriceState.Interfaces\bin\Debug\net8.0\PriceState.Interfaces.pdb
+D:\Borodina\PriceState2\PriceState.Interfaces\bin\Debug\net8.0\PriceState.Data.dll
+D:\Borodina\PriceState2\PriceState.Interfaces\bin\Debug\net8.0\PriceState.Data.pdb
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.csproj.AssemblyReference.cache
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.AssemblyInfoInputs.cache
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.AssemblyInfo.cs
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.csproj.CoreCompileInputs.cache
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.sourcelink.json
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceSta.D2C01E9D.Up2Date
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.dll
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\refint\PriceState.Interfaces.dll
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\PriceState.Interfaces.pdb
+D:\Borodina\PriceState2\PriceState.Interfaces\obj\Debug\net8.0\ref\PriceState.Interfaces.dll

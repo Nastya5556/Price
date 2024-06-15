@@ -6,8 +6,6 @@ public class GetFullProductsRequest: IPaginationRequest
 {
     public long FullProductsId { get; set; }
     
-    public long DopProductId { get; set; }
-    
     public int UnitId { get; set; }
     
     public long ProductId { get; set; }

@@ -17,10 +17,55 @@ namespace PriceState.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("PriceState.Data.Models.DopProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DopProducts");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.FullProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("DopProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DopProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("FullProducts");
+                });
 
             modelBuilder.Entity("PriceState.Data.Models.MailToken", b =>
                 {
@@ -76,19 +121,24 @@ namespace PriceState.Data.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ProductId")
+                    b.Property<long>("FullProductId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.HasKey("Date", "OrganizationId", "ProductId");
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Date", "OrganizationId", "FullProductId");
+
+                    b.HasIndex("FullProductId");
 
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DpPriceOrganizations");
+                    b.ToTable("PriceOrganizations");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.Product", b =>
@@ -103,14 +153,64 @@ namespace PriceState.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("integer");
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UnitId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.ProductGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("MaxNomer")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MinNomer")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductTypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.ToTable("ProductGroups");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.ProductType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.Region", b =>
@@ -192,6 +292,33 @@ namespace PriceState.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PriceState.Data.Models.FullProduct", b =>
+                {
+                    b.HasOne("PriceState.Data.Models.DopProduct", "DopProduct")
+                        .WithMany("FullProducts")
+                        .HasForeignKey("DopProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PriceState.Data.Models.Product", "Product")
+                        .WithMany("FullProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PriceState.Data.Models.Unit", "Unit")
+                        .WithMany("FullProducts")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DopProduct");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("PriceState.Data.Models.MailToken", b =>
                 {
                     b.HasOne("PriceState.Data.Models.User", "User")
@@ -216,32 +343,53 @@ namespace PriceState.Data.Migrations
 
             modelBuilder.Entity("PriceState.Data.Models.PriceOrganization", b =>
                 {
+                    b.HasOne("PriceState.Data.Models.FullProduct", "FullProduct")
+                        .WithMany("PriceOrganizations")
+                        .HasForeignKey("FullProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PriceState.Data.Models.Organization", "Organization")
                         .WithMany("PriceOrganizations")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PriceState.Data.Models.Product", "Product")
+                    b.HasOne("PriceState.Data.Models.Product", null)
                         .WithMany("PriceOrganizations")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("FullProduct");
 
                     b.Navigation("Organization");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.Product", b =>
                 {
-                    b.HasOne("PriceState.Data.Models.Unit", "Unit")
+                    b.HasOne("PriceState.Data.Models.ProductGroup", "ProductGroup")
                         .WithMany("Products")
-                        .HasForeignKey("UnitId")
+                        .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Unit");
+                    b.Navigation("ProductGroup");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.ProductGroup", b =>
+                {
+                    b.HasOne("PriceState.Data.Models.ProductGroup", "Parent")
+                        .WithMany("ProductGroups")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("PriceState.Data.Models.ProductType", "ProductType")
+                        .WithMany("ProductGroups")
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.User", b =>
@@ -255,6 +403,16 @@ namespace PriceState.Data.Migrations
                     b.Navigation("Region");
                 });
 
+            modelBuilder.Entity("PriceState.Data.Models.DopProduct", b =>
+                {
+                    b.Navigation("FullProducts");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.FullProduct", b =>
+                {
+                    b.Navigation("PriceOrganizations");
+                });
+
             modelBuilder.Entity("PriceState.Data.Models.Organization", b =>
                 {
                     b.Navigation("PriceOrganizations");
@@ -262,7 +420,21 @@ namespace PriceState.Data.Migrations
 
             modelBuilder.Entity("PriceState.Data.Models.Product", b =>
                 {
+                    b.Navigation("FullProducts");
+
                     b.Navigation("PriceOrganizations");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.ProductGroup", b =>
+                {
+                    b.Navigation("ProductGroups");
+
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("PriceState.Data.Models.ProductType", b =>
+                {
+                    b.Navigation("ProductGroups");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.Region", b =>
@@ -274,7 +446,7 @@ namespace PriceState.Data.Migrations
 
             modelBuilder.Entity("PriceState.Data.Models.Unit", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("FullProducts");
                 });
 
             modelBuilder.Entity("PriceState.Data.Models.User", b =>

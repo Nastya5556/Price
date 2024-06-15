@@ -8,9 +8,8 @@ public class PriceOrganizationModel
     
     public DateTime Date { get; set; }
 
-    public long ProductId { get; set; }
+    public long FullProductId { get; set; }
 
     public long OrganizationId { get; set; }
     
-    public Data.Models.Product Product { get; set; }
 }

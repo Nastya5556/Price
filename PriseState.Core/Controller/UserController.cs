@@ -5,8 +5,9 @@ using PriceState.Interfaces.Model.User;
 
 
 namespace PriseState.Core.Controller;
+[Route("User")]
 
-public class UserController: Microsoft.AspNetCore.Mvc.Controller
+public class UserController: ControllerBase
 {
     [HttpPost]
     [Route($"{nameof(Login)}")]

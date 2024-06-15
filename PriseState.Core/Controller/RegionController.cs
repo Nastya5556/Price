@@ -8,8 +8,9 @@ using PriceState.Interfaces.Pagination;
 using PriseState.Core.Models;
 
 namespace PriseState.Core.Controller;
+[Route("Region")]
 
-public class RegionController : Microsoft.AspNetCore.Mvc.Controller
+public class RegionController : ControllerBase
 {
 	private readonly IRegionService _region;
 

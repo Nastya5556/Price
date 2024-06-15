@@ -8,8 +8,9 @@ using PriceState.Interfaces.Pagination;
 using PriseState.Core.Models;
 
 namespace PriseState.Core.Controller;
+[Route("Organization")]
 
-public class OrganizationController: Microsoft.AspNetCore.Mvc.Controller
+public class OrganizationController: ControllerBase
 {
 	private readonly IOrganizationService _organizationService;
 
@@ -28,10 +29,10 @@ public class OrganizationController: Microsoft.AspNetCore.Mvc.Controller
 	[Route($"{nameof(Add)}")]
 	[ProducesResponseType(200, Type = typeof(BaseResponse<long>))]
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
-	[Authorize]
+	//[Authorize]
 	public async Task<BaseResponse<long>> Add([FromBody] AddOrganizationRequest request)
 	{
-		var result = await _organizationService.AddOrganizationAsync(request.RegionId, request.OrganizationName);
+		var result = await _organizationService.AddOrganizationAsync(request.Id,request.RegionId, request.OrganizationName);
 		return new BaseResponse<long>(result);
 	}
 
@@ -71,7 +72,7 @@ public class OrganizationController: Microsoft.AspNetCore.Mvc.Controller
 	[Route($"{nameof(Rename)}")]
 	[ProducesResponseType(200, Type = typeof(BaseResponse))]
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
-	[Authorize]
+//	[Authorize]
 	public async Task<BaseResponse> Rename([FromQuery] long id, [FromQuery] string name)
 	{
 		await _organizationService.RenameOrganization(id, name);
@@ -86,7 +87,7 @@ public class OrganizationController: Microsoft.AspNetCore.Mvc.Controller
 	[Route($"{nameof(Delete)}")]
 	[ProducesResponseType(200, Type = typeof(BaseResponse))]
 	[ProducesResponseType(400, Type = typeof(BaseResponse))]
-	[Authorize]
+	//[Authorize]
 	public async Task<BaseResponse> Delete([FromQuery] long id)
 	{
 		await _organizationService.DeleteOrganization(id);

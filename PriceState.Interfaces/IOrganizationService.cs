@@ -6,7 +6,7 @@ namespace PriceState.Interfaces;
 
 public interface IOrganizationService
 {
-   Task<long> AddOrganizationAsync(int regionId, string name);
+   Task<long> AddOrganizationAsync(int Id, int regionId, string name);
 
     Task<GetOrganizationsResponse> GetOrganizations(GetOrganizationsRequest request);
 

@@ -5,7 +5,7 @@ namespace PriceState.Interfaces;
 
 public interface IFullProductService
 {
-    Task<FullProduct?> CreateFullProductAsync( int UnitId, long ProductId, long DopProductId);
+    Task<FullProduct?> CreateFullProductAsync( int UnitId, long ProductId);
 
     Task<GetFullProductsResponse> GetAllFullProductAsync(GetFullProductsRequest request);
     
